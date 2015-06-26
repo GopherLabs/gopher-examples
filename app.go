@@ -1,8 +1,6 @@
 package main
 
-import (
-	gopher "github.com/gopherlabs/gopher-framework"
-)
+import "github.com/gopherlabs/gopher"
 
 func main() {
 	gopher.Start()
