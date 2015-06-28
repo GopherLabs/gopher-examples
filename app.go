@@ -1,21 +1,20 @@
 package main
 
-import "github.com/gopherlabs/gopher"
-
-type WebContext struct{}
+import (
+	"fmt"
+	"github.com/gopherlabs/gopher"
+	"net/http"
+)
 
 func main() {
 	gopher.Start()
 	gopher.Hello("App")
-	router := gopher.NewRouter(WebContext{})
-	_ = router
-	//router.Get("/", (*WebContext).Home)
+
+	router := gopher.NewRouter()
+	router.Get("/", Home)
+	router.Serve()
 }
 
-//func (c *WebContext) Home(rw web.ResponseWriter, req *web.Request) {
-//	if c.User != nil {
-//		fmt.Fprint(rw, "Hello,", c.User.Name)
-//	} else {
-//		fmt.Fprint(rw, "Hello, anonymous person")
-//	}
-//}
+func Home(rw http.ResponseWriter, req *http.Request) {
+	fmt.Fprint(rw, "Hello, Gophers")
+}
