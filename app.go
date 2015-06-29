@@ -7,8 +7,9 @@ import (
 	"github.com/gopherlabs/gopher"
 )
 
+var app = gopher.App()
+
 func main() {
-	app := gopher.App()
 	router := app.Router()
 
 	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
@@ -25,7 +26,7 @@ func main() {
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
-	gopher.Log().Info("[%s] %s", req.Method, req.URL.Path)
+	app.Log().Info("[%s] %s", req.Method, req.URL.Path)
 	fmt.Fprint(rw, "Hello Gophers from Handler!")
 }
 
