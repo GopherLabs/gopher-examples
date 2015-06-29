@@ -8,8 +8,6 @@ import (
 
 func main() {
 	gopher.Start()
-	gopher.Hello("App")
-
 	router := gopher.NewRouter()
 
 	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
@@ -24,6 +22,7 @@ func main() {
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
+	gopher.NewLogger().Info("[%s] %s", req.Method, req.URL.Path)
 	fmt.Fprint(rw, "Hello Gophers from Handler!")
 }
 
