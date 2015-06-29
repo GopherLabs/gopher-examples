@@ -9,8 +9,7 @@ import (
 
 func main() {
 	app := gopher.App()
-	_ = app
-	router := gopher.Router()
+	router := app.Router()
 
 	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Gophers!")
