@@ -11,10 +11,16 @@ func main() {
 	gopher.Hello("App")
 
 	router := gopher.NewRouter()
-	router.Post("/home", Home)
+
+	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "Hello Gophers!")
+	})
+
+	router.Get("/handler", HomeHandler)
+
 	router.Serve()
 }
 
-func Home(rw http.ResponseWriter, req *http.Request) {
-	fmt.Fprint(rw, "Hello Gophers!")
+func HomeHandler(rw http.ResponseWriter, req *http.Request) {
+	fmt.Fprint(rw, "Hello Gophers in Handler!")
 }
