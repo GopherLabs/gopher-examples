@@ -16,11 +16,17 @@ func main() {
 		fmt.Fprint(rw, "Hello Gophers!")
 	})
 
-	router.Get("/handler", HomeHandler)
+	router.Get("/handler", MyHandler)
+
+	router.Get("/variables/{key}", PathParamHandler)
 
 	router.Serve()
 }
 
-func HomeHandler(rw http.ResponseWriter, req *http.Request) {
-	fmt.Fprint(rw, "Hello Gophers in Handler!")
+func MyHandler(rw http.ResponseWriter, req *http.Request) {
+	fmt.Fprint(rw, "Hello Gophers from Handler!")
+}
+
+func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
+	fmt.Fprint(rw, "Key is "+gopher.PathParam(req, "key"))
 }
