@@ -35,5 +35,5 @@ func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
 }
 
 func ViewHandler(rw http.ResponseWriter, req *http.Request) {
-	gopher.View(rw, http.StatusOK, "myview", nil)
+	app.View(rw, http.StatusOK, "myview", nil)
 }
