@@ -7,7 +7,10 @@ import (
 	"github.com/gopherlabs/gopher"
 )
 
-var app = gopher.App()
+var (
+	app = gopher.App()
+	log = app.Log()
+)
 
 func main() {
 
@@ -30,7 +33,7 @@ func addRoutes(router gopher.Routable) {
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
-	app.Log().Info("[%s] %s", req.Method, req.URL.Path)
+	log.Info("[%s] %s", req.Method, req.URL.Path)
 	fmt.Fprint(rw, "Hello Gophers from Handler!")
 }
 
