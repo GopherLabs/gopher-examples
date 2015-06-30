@@ -33,14 +33,20 @@ func addRoutes(router gopher.Routable) {
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
+
 	log.Info("[%s] %s", req.Method, req.URL.Path)
 	fmt.Fprint(rw, "Hello Gophers from Handler!")
 }
 
+//
+// Example of a handler that reads path parameters
+//
 func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
+
 	fmt.Fprint(rw, "Key is "+gopher.PathParam(req, "key"))
 }
 
 func ViewHandler(rw http.ResponseWriter, req *http.Request) {
+
 	app.View(rw, http.StatusOK, "myview", nil)
 }
