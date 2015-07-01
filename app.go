@@ -9,14 +9,12 @@ import (
 
 var (
 	app = gopher.App()
-	log = app.Log()
 )
 
 func main() {
-	log.Info("Hello World")
-	router := app.Router()
-	addRoutes(router)
-	router.Serve()
+	//	router := app.Router()
+	//	addRoutes(router)
+	//	router.Serve()
 }
 
 func addRoutes(router gopher.Routable) {
@@ -33,7 +31,7 @@ func addRoutes(router gopher.Routable) {
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
-	log.Info("[%s] %s", req.Method, req.URL.Path)
+	app.Log().Info("[%s] %s", req.Method, req.URL.Path)
 	fmt.Fprint(rw, "Hello Gophers from Handler!")
 }
 
