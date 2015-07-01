@@ -39,7 +39,7 @@ func MyHandler(rw http.ResponseWriter, req *http.Request) {
 
 // Example of a handler that reads path parameters
 func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
-	fmt.Fprint(rw, "Key is "+gopher.PathParam(req, "key"))
+	fmt.Fprint(rw, "Key is "+app.PathParam(req, "key"))
 }
 
 func ViewHandler(rw http.ResponseWriter, req *http.Request) {
