@@ -24,13 +24,15 @@ func main() {
 		fmt.Fprint(rw, "Hello Gophers!")
 	})
 	app.Get("/handler", MyHandler)
+	app.Post("/handler", MyHandler)
+	app.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
 	app.Get("/variables/{key}", PathParamHandler)
 	app.Get("/view", ViewHandler)
 	app.Serve()
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
-	fmt.Fprint(rw, "Hello Gophers from Handler!")
+	fmt.Fprint(rw, "Hello Gophers from Handler! - HTTP Verb is: "+req.Method)
 }
 
 // Example of a handler that reads path parameters
