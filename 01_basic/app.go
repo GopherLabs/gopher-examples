@@ -30,7 +30,6 @@ func main() {
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
-	app.Log().Info("[%s] %s", req.Method, req.URL.Path)
 	fmt.Fprint(rw, "Hello Gophers from Handler!")
 }
 
