@@ -20,16 +20,22 @@ var (
 )
 
 func main() {
-	app.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
+	router := app.Router()
+
+	router.Get("/router", func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "Hello Router!")
+	})
+
+	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Gophers!")
 	})
-	app.Get("/handler", MyHandler)
-	app.Post("/handler", MyHandler)
-	app.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
-	app.All("/all", MyHandler)
-	app.Get("/variables/{key}", PathParamHandler)
-	app.Get("/view", ViewHandler)
-	app.Serve()
+	router.Get("/handler", MyHandler)
+	router.Post("/handler", MyHandler)
+	router.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
+	router.All("/all", MyHandler)
+	router.Get("/variables/{key}", PathParamHandler)
+	router.Get("/view", ViewHandler)
+	router.Serve()
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
