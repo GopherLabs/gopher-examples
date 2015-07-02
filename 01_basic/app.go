@@ -26,6 +26,7 @@ func main() {
 	app.Get("/handler", MyHandler)
 	app.Post("/handler", MyHandler)
 	app.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
+	app.All("/all", MyHandler)
 	app.Get("/variables/{key}", PathParamHandler)
 	app.Get("/view", ViewHandler)
 	app.Serve()
