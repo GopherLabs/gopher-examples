@@ -12,6 +12,9 @@ var (
 		gopher.LOGGER: {
 			"FullTimestamp": true,
 		},
+		gopher.RENDERER: {
+			"ViewsDir": "templates",
+		},
 	}
 	app = gopher.App(config)
 )
