@@ -1,19 +1,27 @@
 package main
 
-import "github.com/gopherlabs/gopher"
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/gopherlabs/gopher"
+)
 
 var config = map[string]map[string]interface{}{
 	gopher.LOGGER: {
-		"FullTimestamp": false,
+		"FullTimestamp": true,
 	},
 }
 
 func main() {
-	gopher.App(config)
+	app := gopher.App(config)
+	router := app.Router()
+	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "Hello Gophers!")
+	})
 
-	//	router := app.Router()
 	//	addRoutes(router)
-	//	router.Serve()
+	router.Serve()
 }
 
 /*
