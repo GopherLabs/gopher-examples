@@ -7,35 +7,24 @@ import (
 	"github.com/gopherlabs/gopher"
 )
 
-var config = map[string]map[string]interface{}{
-	gopher.LOGGER: {
-		"FullTimestamp": true,
-	},
-}
+var (
+	config = map[string]map[string]interface{}{
+		gopher.LOGGER: {
+			"FullTimestamp": true,
+		},
+	}
+	app = gopher.App(config)
+)
 
 func main() {
-	app := gopher.App(config)
 	router := app.Router()
 	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Gophers!")
 	})
-
-	//	addRoutes(router)
-	router.Serve()
-}
-
-/*
-func addRoutes(router gopher.Routable) {
-
-	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "Hello Gophers!")
-	})
-
 	router.Get("/handler", MyHandler)
-
 	router.Get("/variables/{key}", PathParamHandler)
-
 	router.Get("/view", ViewHandler)
+	router.Serve()
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
@@ -51,4 +40,3 @@ func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
 func ViewHandler(rw http.ResponseWriter, req *http.Request) {
 	app.View(rw, http.StatusOK, "myview", nil)
 }
-*/
