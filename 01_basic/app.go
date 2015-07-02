@@ -1,22 +1,22 @@
 package main
 
-import (
-	"fmt"
-	"net/http"
+import "github.com/gopherlabs/gopher"
 
-	"github.com/gopherlabs/gopher"
-)
-
-var (
-	app = gopher.App()
-)
+var config = map[string]map[string]interface{}{
+	gopher.LOGGER: {
+		"FullTimestamp": false,
+	},
+}
 
 func main() {
+	gopher.App(config)
+
 	//	router := app.Router()
 	//	addRoutes(router)
 	//	router.Serve()
 }
 
+/*
 func addRoutes(router gopher.Routable) {
 
 	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
@@ -43,3 +43,4 @@ func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
 func ViewHandler(rw http.ResponseWriter, req *http.Request) {
 	app.View(rw, http.StatusOK, "myview", nil)
 }
+*/
