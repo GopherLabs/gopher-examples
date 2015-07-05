@@ -16,11 +16,12 @@ var (
 			"ViewsDir": "templates",
 		},
 	}
-	app = gopher.App(config)
+	app = gopher.NewApp(config)
+	log = app.NewLog()
 )
 
 func main() {
-	router := app.Router()
+	router := app.NewRouter()
 
 	router.Get("/router", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Router!")
@@ -35,6 +36,21 @@ func main() {
 	router.All("/all", MyHandler)
 	router.Get("/variables/{key}", PathParamHandler)
 	router.Get("/view", ViewHandler)
+
+	sample := app.NewSample()
+	sample.SetName("Sample")
+	app.NewLog().Info("sample is " + sample.GetName())
+
+	subSample := sample.NewSample()
+	subSample.SetName("SubSample")
+	log.Info("subSample is " + subSample.GetName())
+
+	subSubSample := sample.NewSample()
+	subSubSample.SetName("subSubSample")
+	log.Info("subSubSample is " + subSubSample.GetName())
+
+	log.Info("sample is " + sample.GetName())
+
 	router.Serve()
 }
 
