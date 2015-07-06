@@ -37,6 +37,10 @@ func main() {
 	r.Get("/variables/{key}", PathParamHandler)
 	r.Get("/view", ViewHandler)
 
+	r.NotFound(func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "Could not find page")
+	})
+
 	sub := r.SubRouter()
 	sub.Get("/shirts", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "sub Shirt")
