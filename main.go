@@ -10,7 +10,7 @@ import (
 var (
 	config = map[string]map[string]interface{}{
 		gopher.LOGGER: {
-			"FullTimestamp": true,
+			"FullTimestamp": false,
 		},
 		gopher.RENDERER: {
 			"ViewsDir": "templates",
@@ -21,37 +21,37 @@ var (
 )
 
 func main() {
-	router := app.NewRouter()
+	r := app.NewRouter()
 
-	router.Get("/router", func(rw http.ResponseWriter, req *http.Request) {
+	r.Get("/router", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Router!")
 	})
 
-	router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
+	r.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Gophers!")
 	})
-	router.Get("/handler", MyHandler)
-	router.Post("/handler", MyHandler)
-	router.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
-	router.All("/all", MyHandler)
-	router.Get("/variables/{key}", PathParamHandler)
-	router.Get("/view", ViewHandler)
+	r.Get("/handler", MyHandler)
+	r.Post("/handler", MyHandler)
+	r.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
+	r.All("/all", MyHandler)
+	r.Get("/variables/{key}", PathParamHandler)
+	r.Get("/view", ViewHandler)
 
-	sample := app.NewSample()
-	sample.SetName("Sample")
-	app.NewLog().Info("sample is " + sample.GetName())
+	//	sample := app.NewSample()
+	//	sample.SetName("Sample")
+	//	app.NewLog().Info("sample is " + sample.GetName())
+	//
+	//	subSample := sample.NewSample()
+	//	subSample.SetName("SubSample")
+	//	log.Info("subSample is " + subSample.GetName())
+	//
+	//	subSubSample := sample.NewSample()
+	//	subSubSample.SetName("subSubSample")
+	//	log.Info("subSubSample is " + subSubSample.GetName())
+	//
+	//	log.Info("sample is " + sample.GetName())
 
-	subSample := sample.NewSample()
-	subSample.SetName("SubSample")
-	log.Info("subSample is " + subSample.GetName())
-
-	subSubSample := sample.NewSample()
-	subSubSample.SetName("subSubSample")
-	log.Info("subSubSample is " + subSubSample.GetName())
-
-	log.Info("sample is " + sample.GetName())
-
-	router.Serve()
+	r.Serve()
 }
 
 func MyHandler(rw http.ResponseWriter, req *http.Request) {
