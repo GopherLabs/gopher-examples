@@ -20,6 +20,14 @@ var (
 	log = app.NewLog()
 )
 
+type MyMiddleware struct {
+}
+
+func (m MyMiddleware) Handle(next func(), rw http.ResponseWriter, req *http.Request) {
+	fmt.Fprint(rw, "Inside My Middleware!")
+	next()
+}
+
 func main() {
 	r := app.NewRouter()
 
@@ -36,6 +44,8 @@ func main() {
 	r.All("/all", MyHandler)
 	r.Get("/variables/{key}", PathParamHandler)
 	r.Get("/view", ViewHandler)
+
+	r.Use(MyMiddleware{})
 
 	r.NotFound(func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Could not find page")
