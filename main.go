@@ -28,7 +28,7 @@ func main() {
 	})
 
 	r.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "Hello Gophers!")
+		fmt.Fprint(rw, "Hello, Gophers!")
 	})
 	r.Get("/handler", MyHandler)
 	r.Post("/handler", MyHandler)
@@ -36,6 +36,16 @@ func main() {
 	r.All("/all", MyHandler)
 	r.Get("/variables/{key}", PathParamHandler)
 	r.Get("/view", ViewHandler)
+
+	sub := r.SubRouter()
+	sub.Get("/shirts", func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "sub Shirt")
+	})
+
+	subSub := sub.SubRouter()
+	subSub.Get("/shirts", func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "subSub Shirt")
+	})
 
 	//	sample := app.NewSample()
 	//	sample.SetName("Sample")
