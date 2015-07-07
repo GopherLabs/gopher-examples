@@ -53,6 +53,16 @@ func MyMiddleWareFunc2(rw http.ResponseWriter, req *http.Request, next func(), a
 	next()
 }
 
+func MyAppMiddleWareRouteHanlder(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
+	fmt.Fprint(rw, "\n\n From MyAppMiddleWareRouteHanlder \n")
+	next()
+}
+
+func MyAppMiddleWareRouteHanlder2(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
+	fmt.Fprint(rw, "\n\n From MyAppMiddleWareRouteHanlder2 \n")
+	next()
+}
+
 type MyContext struct {
 	Username string
 }
@@ -74,11 +84,12 @@ func main() {
 		fmt.Fprint(rw, "Hello, Gophers!")
 	})
 	r.Get("/handler", MyHandler)
-	r.Post("/handler", MyHandler)
-	r.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
+	r.Post("/handler", MyHandler, MyAppMiddleWareRouteHanlder)
+	//r.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
 	r.All("/all", MyHandler)
 	r.Get("/variables/{key}", PathParamHandler)
 	r.Get("/view", ViewHandler)
+	r.Get("/route", MyHandler, MyAppMiddleWareRouteHanlder, MyAppMiddleWareRouteHanlder2)
 
 	r.NotFound(func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Could not find page")
