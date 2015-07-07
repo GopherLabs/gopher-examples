@@ -23,6 +23,11 @@ var (
 type MyMiddleware struct {
 }
 
+func MyAppMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
+	fmt.Fprint(rw, "Inside My APP MyMiddleWareFunc 1 \n")
+	next()
+}
+
 func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
 	fmt.Fprint(rw, "Inside My MyMiddleWareFunc 1\n")
 	if len(args) > 0 {
@@ -41,6 +46,9 @@ type MyContext struct {
 }
 
 func main() {
+
+	app.Use(MyAppMiddleWareFunc1)
+
 	r := app.NewRouter()
 
 	r.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
