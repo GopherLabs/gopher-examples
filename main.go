@@ -23,20 +23,25 @@ var (
 type MyMiddleware struct {
 }
 
-func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func()) {
+func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
 	fmt.Fprint(rw, "Inside My MyMiddleWareFunc 1\n")
+	fmt.Fprintf(rw, "Hello %s \n", args[0].(MyContext).Username)
 	next()
 }
 
-func MyMiddleWareFunc2(rw http.ResponseWriter, req *http.Request, next func()) {
-	fmt.Fprint(rw, "Inside My MyMiddleWareFunc 2\n")
+func MyMiddleWareFunc2(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
+	fmt.Fprint(rw, "Inside My MyMiddleWareFunc 2 \n")
 	next()
+}
+
+type MyContext struct {
+	Username string
 }
 
 func main() {
 	r := app.NewRouter()
 
-	r.Use(MyMiddleWareFunc1)
+	r.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
 	r.Use(MyMiddleWareFunc2)
 
 	r.Get("/router", func(rw http.ResponseWriter, req *http.Request) {
