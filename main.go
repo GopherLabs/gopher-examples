@@ -23,13 +23,13 @@ var (
 type MyMiddleware struct {
 }
 
-func (m MyMiddleware) Handle(next func(), rw http.ResponseWriter, req *http.Request) {
-	fmt.Fprint(rw, "Inside My Middleware!")
+func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func()) {
+	fmt.Fprint(rw, "Inside My MyMiddleWareFunc 1\n")
 	next()
 }
 
-func MyMiddleWareFunc(rw http.ResponseWriter, req *http.Request, next func()) {
-	fmt.Fprint(rw, "Inside My Middleware!")
+func MyMiddleWareFunc2(rw http.ResponseWriter, req *http.Request, next func()) {
+	fmt.Fprint(rw, "Inside My MyMiddleWareFunc 2\n")
 	next()
 }
 
@@ -50,7 +50,8 @@ func main() {
 	r.Get("/variables/{key}", PathParamHandler)
 	r.Get("/view", ViewHandler)
 
-	r.Use(MyMiddleWareFunc)
+	r.Use(MyMiddleWareFunc1)
+	r.Use(MyMiddleWareFunc2)
 
 	r.NotFound(func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Could not find page")
