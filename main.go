@@ -85,7 +85,7 @@ func main() {
 	})
 	r.Get("/handler", MyHandler)
 	r.Post("/handler", MyHandler, MyAppMiddleWareRouteHanlder)
-	//r.Match("/verbs", MyHandler, "GET", "POST", "DELETE")
+	r.Match("/verbs", MyHandler, []string{"GET", "POST", "DELETE"})
 	r.All("/all", MyHandler)
 	r.Get("/variables/{key}", PathParamHandler)
 	r.Get("/view", ViewHandler)
