@@ -36,6 +36,9 @@ func MyMiddleWareFunc2(rw http.ResponseWriter, req *http.Request, next func()) {
 func main() {
 	r := app.NewRouter()
 
+	r.Use(MyMiddleWareFunc1)
+	r.Use(MyMiddleWareFunc2)
+
 	r.Get("/router", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Router!")
 	})
@@ -49,9 +52,6 @@ func main() {
 	r.All("/all", MyHandler)
 	r.Get("/variables/{key}", PathParamHandler)
 	r.Get("/view", ViewHandler)
-
-	r.Use(MyMiddleWareFunc1)
-	r.Use(MyMiddleWareFunc2)
 
 	r.NotFound(func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Could not find page")
