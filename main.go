@@ -25,7 +25,9 @@ type MyMiddleware struct {
 
 func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
 	fmt.Fprint(rw, "Inside My MyMiddleWareFunc 1\n")
-	fmt.Fprintf(rw, "Hello %s \n", args[0].(MyContext).Username)
+	if len(args) > 0 {
+		fmt.Fprintf(rw, "Hello %s \n", args[0].(MyContext).Username)
+	}
 	next()
 }
 
