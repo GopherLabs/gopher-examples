@@ -25,20 +25,20 @@ type MyMiddleware struct {
 
 func MyAppMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
 	fmt.Fprint(rw, "\n\nInside My APP MyMiddleWareFunc 1 \n")
-	fmt.Fprintf(rw, "Has user key? %t \n", app.Context().Has("user"))
+	fmt.Fprintf(rw, "Has user key? %t \n", app.Has("user"))
 	user := new(MyContext)
 	user.Username = "rrossi"
-	app.Context().Write("user", user)
+	app.Set("user", user)
 	next()
 }
 
 func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
 	fmt.Fprint(rw, "\n\nInside My MyMiddleWareFunc 1\n")
-	fmt.Fprintf(rw, "Has user key? %t \n", app.Context().Has("user"))
+	fmt.Fprintf(rw, "Has user key? %t \n", app.Has("user"))
 	if len(args) > 0 {
 		fmt.Fprintf(rw, "Hello %s \n", args[0].(MyContext).Username)
 	}
-	user := app.Context().Read("user").(*MyContext)
+	user := app.Get("user").(*MyContext)
 	fmt.Fprintf(rw, "My username is %s \n", user.Username)
 	user.Username = "Modified " + user.Username
 	next()
@@ -46,8 +46,8 @@ func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), a
 
 func MyMiddleWareFunc2(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
 	fmt.Fprint(rw, "\n\nInside My MyMiddleWareFunc 2 \n")
-	fmt.Fprintf(rw, "Has user key? %t \n", app.Context().Has("user"))
-	user := app.Context().Read("user").(*MyContext)
+	fmt.Fprintf(rw, "Has user key? %t \n", app.Has("user"))
+	user := app.Get("user").(*MyContext)
 	user.Username = "modified again"
 	fmt.Fprintf(rw, "My username is %s \n\n", user.Username)
 	next()
@@ -128,15 +128,15 @@ func MyHandler(rw http.ResponseWriter, req *http.Request) {
 
 // Example of a handler that reads path parameters
 func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(rw, "Has user key? %t \n", app.Context().Has("user"))
+	fmt.Fprintf(rw, "Has user key? %t \n", app.Has("user"))
 	fmt.Fprint(rw, "The Param Key is "+app.PathParam(req, "key"))
-	user := app.Context().Read("user").(*MyContext)
+	user := app.Get("user").(*MyContext)
 	fmt.Fprintf(rw, "\nInside PathParamHandler = My username is %s \n", user.Username)
 
-	fmt.Fprintf(rw, "Has user key? %t \n", app.Context().Has("user"))
+	fmt.Fprintf(rw, "Has user key? %t \n", app.Has("user"))
 	fmt.Fprint(rw, "Removing key... \n")
-	app.Context().Remove("user")
-	fmt.Fprintf(rw, "Has user key? %t \n", app.Context().Has("user"))
+	app.Remove("user")
+	fmt.Fprintf(rw, "Has user key? %t \n", app.Has("user"))
 }
 
 func ViewHandler(rw http.ResponseWriter, req *http.Request) {
