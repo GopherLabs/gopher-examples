@@ -11,12 +11,11 @@ func main() {
 
 	g.Initialize()
 
-	g.Log.Debug("hello debug() we are cooking!")
-	g.Log.Info("Now we are cooking!")
-	g.Log.Warn("Now we are cooking!")
+	g.Context.Set("user", "Ricardo Rossi")
 
 	g.Router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprintln(rw, "Hello, hello!")
+		g.Log.Info("Now we are cooking!")
+		fmt.Fprintln(rw, "Hello, "+g.Context.Get("user").(string))
 	})
 
 	g.Router.NotFound(func(rw http.ResponseWriter, req *http.Request) {
