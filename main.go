@@ -17,7 +17,6 @@ var (
 		},
 	}
 	app = gopher.NewApp(config)
-	log = app.NewLog()
 )
 
 type MyMiddleware struct {
@@ -119,6 +118,7 @@ func main() {
 	//
 	//	log.Info("sample is " + sample.GetName())
 
+	app.NewLog().Info("Serve(), I am logging!")
 	r.Serve()
 }
 
@@ -137,6 +137,7 @@ func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
 	fmt.Fprint(rw, "Removing key... \n")
 	app.Remove("user")
 	fmt.Fprintf(rw, "Has user key? %t \n", app.Has("user"))
+	app.Info("Cool, I am logging!")
 }
 
 func ViewHandler(rw http.ResponseWriter, req *http.Request) {
