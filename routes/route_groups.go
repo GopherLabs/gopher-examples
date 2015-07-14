@@ -11,6 +11,10 @@ func main() {
 
 	Context.Set("user", "Ricardo Rossi")
 
+	Router.Get("/text", func(rw http.ResponseWriter, req *http.Request) {
+		Render.Text(rw, "Hello Text")
+	})
+
 	Router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
 		Log.Info("Now we are cooking!")
 		fmt.Fprintln(rw, "Hello, "+Context.Get("user").(string))
