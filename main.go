@@ -23,8 +23,7 @@ func main() {
 	}
 	_ = config
 
-	// TODO Replace with App.Config()
-	Config(config)
+	App.Config(config)
 	App.Use(MyAppMiddleWareFunc1)
 
 	Router.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
