@@ -23,9 +23,9 @@ func main() {
 	}
 	_ = config
 
+	// TODO Replace with App.Config()
 	Config(config)
-	// TODO Replace with App.Config() and App.Use()
-	Middleware.Use(MyAppMiddleWareFunc1)
+	App.Use(MyAppMiddleWareFunc1)
 
 	Router.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
 	Router.Use(MyMiddleWareFunc2)
