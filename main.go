@@ -22,9 +22,10 @@ func main() {
 		},
 	}
 	_ = config
-	//app.Use(MyAppMiddleWareFunc1)
 
 	Config(config)
+	// TODO Replace with App.Config() and App.Use()
+	Middleware.Use(MyAppMiddleWareFunc1)
 
 	Router.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
 	Router.Use(MyMiddleWareFunc2)
@@ -70,15 +71,15 @@ func MyHandler(rw http.ResponseWriter, req *http.Request) {
 
 // Example of a handler that reads path parameters
 func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
-	Log.Info("Has user key? %t \n", Context.Has("user"))
+	Log.Info("Has user key? %t ", Context.Has("user"))
 	//Log.Info("The Param Key is "+.PathParam(req, "key"))
 	user := Context.Get("user").(*MyContext)
-	Log.Info("Inside PathParamHandler = My username is %s \n", user.Username)
+	Log.Info("Inside PathParamHandler = My username is %s ", user.Username)
 
-	Log.Info("Has user key? %t \n", Context.Has("user"))
-	Log.Info("Removing key... \n")
+	Log.Info("Has user key? %t ", Context.Has("user"))
+	Log.Info("Removing key... ")
 	Context.Remove("user")
-	Log.Info("Has user key? %t \n", Context.Has("user"))
+	Log.Info("Has user key? %t ", Context.Has("user"))
 	Log.Info("Cool, I am logging!")
 }
 
@@ -87,8 +88,8 @@ func ViewHandler(rw http.ResponseWriter, req *http.Request) {
 }
 
 func MyAppMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
-	Log.Info("Inside My APP MyMiddleWareFunc 1")
-	Log.Info("Has user key? %t \n", Context.Has("user"))
+	Log.Info("======== Inside My APP MyMiddleWareFunc 1")
+	Log.Info("Has user key? %t ", Context.Has("user"))
 	user := new(MyContext)
 	user.Username = "rrossi"
 	Context.Set("user", user)
@@ -103,7 +104,7 @@ func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), a
 	}
 	if Context.Has("user") {
 		user := Context.Get("user").(*MyContext)
-		Log.Info("My username is %s \n", user.Username)
+		Log.Info("My username is %s ", user.Username)
 		user.Username = "Modified " + user.Username
 	}
 	next()
@@ -111,11 +112,11 @@ func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), a
 
 func MyMiddleWareFunc2(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
 	Log.Info("Inside My MyMiddleWareFunc 2")
-	Log.Info("Has user key? %t \n", Context.Has("user"))
+	Log.Info("Has user key? %t ", Context.Has("user"))
 	if Context.Has("user") {
 		user := Context.Get("user").(*MyContext)
 		user.Username = "modified again"
-		Log.Info("My username is %s \n\n", user.Username)
+		Log.Info("My username is %s ", user.Username)
 	}
 	next()
 }
