@@ -14,10 +14,10 @@ type MyContext struct {
 func main() {
 
 	var config = map[string]map[string]interface{}{
-		"LOGGER": {
+		App.LOGGER: {
 			"FullTimestamp": false,
 		},
-		"RENDERER": {
+		App.RENDERER: {
 			"ViewsDir": "templates",
 		},
 	}
