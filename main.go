@@ -24,6 +24,8 @@ func main() {
 	_ = config
 	//app.Use(MyAppMiddleWareFunc1)
 
+	Config(config)
+
 	Router.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
 	Router.Use(MyMiddleWareFunc2)
 
@@ -81,7 +83,7 @@ func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
 }
 
 func ViewHandler(rw http.ResponseWriter, req *http.Request) {
-	Render.View(rw, http.StatusOK, "myview", nil)
+	Render.View(rw, "myview", nil)
 }
 
 func MyAppMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
