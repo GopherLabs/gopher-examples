@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	. "github.com/gopherlabs/gopher"
@@ -11,17 +10,17 @@ func main() {
 
 	Context.Set("user", "Ricardo Rossi")
 
-	Router.Get("/text", func(rw http.ResponseWriter, req *http.Request) {
-		Render.Text(rw, "Hello Text")
+	Router.Get("/text", func(w http.ResponseWriter, r *http.Request) {
+		Render.Text(w, "Hello Text")
 	})
 
-	Router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
+	Router.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
 		Log.Info("Now we are cooking!")
-		fmt.Fprintln(rw, "Hello, "+Context.Get("user").(string))
+		Render.Text(w, "Hello, "+Context.Get("user").(string))
 	})
 
-	Router.NotFound(func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "hey! Could not find this page")
+	Router.NotFound(func(w http.ResponseWriter, r *http.Request) {
+		Render.Text(w, "Could not find this page")
 	})
 
 	ListenAndServe()
