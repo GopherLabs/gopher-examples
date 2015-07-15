@@ -13,16 +13,16 @@ type MyContext struct {
 
 func main() {
 
-	var config = map[string]map[string]interface{}{
-		App.LOGGER: {
-			"FullTimestamp": false,
+	var config = Config{
+		KEY_ROUTER: ConfigRouter{
+			Port: 3002,
+			Host: "0.0.0.0",
 		},
-		App.RENDERER: {
-			"ViewsDir": "templates",
-		},
+		//		KEY_LOGGER: ConfigLogger{
+		//			FullTimestamp: false,
+		//			LogLevel:      LEVEL_DEBUG,
+		//		},
 	}
-	_ = config
-
 	App.Config(config)
 	App.Use(MyAppMiddleWareFunc1)
 
