@@ -26,25 +26,25 @@ func main() {
 	App.Config(config)
 	App.Use(MyAppMiddleWareFunc1)
 
-	Router.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
-	Router.Use(MyMiddleWareFunc2)
+	Route.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
+	Route.Use(MyMiddleWareFunc2)
 
-	Router.Get("/router", func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "Hello Router!")
+	Route.Get("/Route", func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "Hello Route!")
 	})
 
-	Router.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
+	Route.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello, Gophers!")
 	})
-	Router.Get("/handler", MyHandler)
-	Router.Post("/handler", MyHandler, MyAppMiddleWareRouteHanlder)
-	Router.Match("/verbs", MyHandler, []string{"GET", "POST", "DELETE"}, MyAppMiddleWareRouteHanlder)
-	Router.All("/all", MyHandler)
-	Router.Get("/variables/{key}", PathParamHandler)
-	Router.Get("/view", ViewHandler)
-	Router.Get("/route", MyHandler, MyAppMiddleWareRouteHanlder, MyAppMiddleWareRouteHanlder2)
+	Route.Get("/handler", MyHandler)
+	Route.Post("/handler", MyHandler, MyAppMiddleWareRouteHanlder)
+	Route.Match("/verbs", MyHandler, []string{"GET", "POST", "DELETE"}, MyAppMiddleWareRouteHanlder)
+	Route.All("/all", MyHandler)
+	Route.Get("/variables/{key}", PathParamHandler)
+	Route.Get("/view", ViewHandler)
+	Route.Get("/route", MyHandler, MyAppMiddleWareRouteHanlder, MyAppMiddleWareRouteHanlder2)
 
-	Router.NotFound(func(rw http.ResponseWriter, req *http.Request) {
+	Route.NotFound(func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Could not find page")
 	})
 
@@ -60,7 +60,6 @@ func main() {
 		})
 	*/
 
-	Log.Info("Serve(), I am logging!")
 	ListenAndServe()
 }
 
