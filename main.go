@@ -70,7 +70,8 @@ func MyHandler(rw http.ResponseWriter, req *http.Request) {
 // Example of a handler that reads path parameters
 func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
 	Log.Info("Has user key? %t ", Context.Has("user"))
-	//Log.Info("The Param Key is "+.PathParam(req, "key"))
+	Log.Info("The Key : " + Route.Var(req, "key"))
+	Render.Text(rw, "The Key : "+Route.Var(req, "key"))
 	user := Context.Get("user").(*MyContext)
 	Log.Info("Inside PathParamHandler = My username is %s ", user.Username)
 
