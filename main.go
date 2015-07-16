@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	. "github.com/gopherlabs/gopher"
@@ -30,11 +29,11 @@ func main() {
 	Route.Use(MyMiddleWareFunc2)
 
 	Route.Get("/route", func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "Hello Route!")
+		Render.Text(rw, "Hello Route!")
 	})
 
 	Route.Get("/hello", func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "Hello, Gophers!")
+		Render.Text(rw, "Hello, Gophers!")
 	})
 	Route.Get("/handler", MyHandler)
 	Route.Post("/handler", MyHandler, MyAppMiddleWareRouteHanlder)
@@ -45,21 +44,22 @@ func main() {
 	Route.Get("/route", MyHandler, MyAppMiddleWareRouteHanlder, MyAppMiddleWareRouteHanlder2)
 
 	Route.NotFound(func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "Could not find page")
+		Render.Text(rw, "Could not find page")
 	})
 
 	group := RouteGroup.New(GroupMatcher{
 		PathPrefix: "/abc",
 	})
 	group.Get("/group", func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "Hello Group!")
+		Render.Text(rw, "Hello Group!")
 	})
 
 	adminGroup := RouteGroup.New(GroupMatcher{
 		PathPrefix: "/admin",
+		Queries:    []string{"q", "boo"},
 	})
 	adminGroup.Get("/profile", func(rw http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(rw, "Hello Admin!")
+		Render.Text(rw, "Hello Admin!")
 	})
 
 	ListenAndServe()
