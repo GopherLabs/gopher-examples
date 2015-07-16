@@ -48,7 +48,9 @@ func main() {
 		fmt.Fprint(rw, "Could not find page")
 	})
 
-	group := RouteGroup.New()
+	group := RouteGroup.New(GroupMatcher{
+		PathPrefix: "/abc",
+	})
 	group.Get("/group", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Group!")
 	})
