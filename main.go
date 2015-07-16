@@ -55,6 +55,13 @@ func main() {
 		fmt.Fprint(rw, "Hello Group!")
 	})
 
+	adminGroup := RouteGroup.New(GroupMatcher{
+		PathPrefix: "/admin",
+	})
+	adminGroup.Get("/profile", func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "Hello Admin!")
+	})
+
 	ListenAndServe()
 }
 
