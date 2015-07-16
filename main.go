@@ -53,6 +53,7 @@ func main() {
 	group.Get("/group", func(rw http.ResponseWriter, req *http.Request) {
 		Render.Text(rw, "Hello Group!")
 	})
+	group.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
 
 	adminGroup := RouteGroup.New(GroupMatcher{
 		PathPrefix: "/admin",
