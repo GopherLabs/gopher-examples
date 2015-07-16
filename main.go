@@ -53,18 +53,6 @@ func main() {
 		fmt.Fprint(rw, "Hello Group!")
 	})
 
-	/*
-		sub := r.SubRouter()
-		sub.Get("/shirts", func(rw http.ResponseWriter, req *http.Request) {
-			fmt.Fprint(rw, "sub Shirt")
-		})
-
-		subSub := sub.SubRouter()
-		subSub.Get("/shirts", func(rw http.ResponseWriter, req *http.Request) {
-			fmt.Fprint(rw, "subSub Shirt")
-		})
-	*/
-
 	ListenAndServe()
 }
 
