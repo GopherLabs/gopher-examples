@@ -29,7 +29,7 @@ func main() {
 	Route.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
 	Route.Use(MyMiddleWareFunc2)
 
-	Route.Get("/Route", func(rw http.ResponseWriter, req *http.Request) {
+	Route.Get("/route", func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Hello Route!")
 	})
 
@@ -46,6 +46,11 @@ func main() {
 
 	Route.NotFound(func(rw http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(rw, "Could not find page")
+	})
+
+	group := RouteGroup.New()
+	group.Get("/group", func(rw http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(rw, "Hello Group!")
 	})
 
 	/*
