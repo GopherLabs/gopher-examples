@@ -12,17 +12,16 @@ type MyContext struct {
 
 func main() {
 
-	var config = Config{
+	App.Config(Config{
 		KEY_ROUTER: ConfigRouter{
 			Port: 3002,
 			Host: "0.0.0.0",
 		},
-		//		KEY_LOGGER: ConfigLogger{
-		//			FullTimestamp: false,
-		//			LogLevel:      LEVEL_DEBUG,
-		//		},
-	}
-	App.Config(config)
+		KEY_LOGGER: ConfigLogger{
+			FullTimestamp: false,
+			LogLevel:      LEVEL_DEBUG,
+		},
+	})
 	App.Use(MyAppMiddleWareFunc1)
 
 	Route.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
