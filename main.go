@@ -22,6 +22,7 @@ func main() {
 			LogLevel:      LEVEL_DEBUG,
 		},
 	})
+
 	App.Use(MyAppMiddleWareFunc1)
 
 	Route.Use(MyMiddleWareFunc1, MyContext{Username: "Ricardo"})
