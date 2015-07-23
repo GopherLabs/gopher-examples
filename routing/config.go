@@ -10,7 +10,15 @@ import (
 )
 
 func main() {
-	Route.Static("/static", "./static")
+	App.Config(Config{
+		KEY_ROUTER: ConfigRouter{
+			Port: 8080,
+			Host: "0.0.0.0",
+			StaticDirs: map[string]string{
+				"/static": "./static/",
+			},
+		},
+	})
 	Route.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		Render.Text(w, "Hello, Gopher!")
 	})
