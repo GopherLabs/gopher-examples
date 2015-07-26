@@ -72,17 +72,17 @@ func MyHandler(rw http.ResponseWriter, req *http.Request) {
 }
 
 // Example of a handler that reads path parameters
-func PathParamHandler(rw http.ResponseWriter, req *http.Request) {
-	Log.Info("Has user key? %t ", Context.Has("user"))
-	Log.Info("The Key : " + Route.Var(req, "key"))
-	Render.Text(rw, "The Key : "+Route.Var(req, "key"))
-	user := Context.Get("user").(*MyContext)
+func PathParamHandler(w http.ResponseWriter, r *http.Request) {
+	Log.Info("Has user key? %t ", Context.Has(r, "user"))
+	Log.Info("The Key : " + Route.Var(r, "key"))
+	Render.Text(w, "The Key : "+Route.Var(r, "key"))
+	user := Context.Get(r, "user").(*MyContext)
 	Log.Info("Inside PathParamHandler = My username is %s ", user.Username)
 
-	Log.Info("Has user key? %t ", Context.Has("user"))
+	Log.Info("Has user key? %t ", Context.Has(r, "user"))
 	Log.Info("Removing key... ")
-	Context.Remove("user")
-	Log.Info("Has user key? %t ", Context.Has("user"))
+	Context.Delete(r, "user")
+	Log.Info("Has user key? %t ", Context.Has(r, "user"))
 	Log.Info("Cool, I am logging!")
 }
 
@@ -90,34 +90,34 @@ func ViewHandler(rw http.ResponseWriter, req *http.Request) {
 	Render.View(rw, "myview", nil)
 }
 
-func MyAppMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
+func MyAppMiddleWareFunc1(rw http.ResponseWriter, r *http.Request, next func(), args ...interface{}) {
 	Log.Info("======== Inside My APP MyMiddleWareFunc 1")
-	Log.Info("Has user key? %t ", Context.Has("user"))
+	Log.Info("Has user key? %t ", Context.Has(r, "user"))
 	user := new(MyContext)
 	user.Username = "rrossi"
-	Context.Set("user", user)
+	Context.Set(r, "user", user)
 	next()
 }
 
-func MyMiddleWareFunc1(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
+func MyMiddleWareFunc1(rw http.ResponseWriter, r *http.Request, next func(), args ...interface{}) {
 	Log.Info("Inside My MyMiddleWareFunc 1")
-	Log.Info("Has user key? %t ", Context.Has("user"))
+	Log.Info("Has user key? %t ", Context.Has(r, "user"))
 	if len(args) > 0 {
 		Log.Info("Hello %s ", args[0].(MyContext).Username)
 	}
-	if Context.Has("user") {
-		user := Context.Get("user").(*MyContext)
+	if Context.Has(r, "user") {
+		user := Context.Get(r, "user").(*MyContext)
 		Log.Info("My username is %s ", user.Username)
 		user.Username = "Modified " + user.Username
 	}
 	next()
 }
 
-func MyMiddleWareFunc2(rw http.ResponseWriter, req *http.Request, next func(), args ...interface{}) {
+func MyMiddleWareFunc2(rw http.ResponseWriter, r *http.Request, next func(), args ...interface{}) {
 	Log.Info("Inside My MyMiddleWareFunc 2")
-	Log.Info("Has user key? %t ", Context.Has("user"))
-	if Context.Has("user") {
-		user := Context.Get("user").(*MyContext)
+	Log.Info("Has user key? %t ", Context.Has(r, "user"))
+	if Context.Has(r, "user") {
+		user := Context.Get(r, "user").(*MyContext)
 		user.Username = "modified again"
 		Log.Info("My username is %s ", user.Username)
 	}
