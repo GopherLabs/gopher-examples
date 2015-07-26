@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	. "github.com/gopherlabs/gopher"
 )
@@ -18,8 +19,8 @@ func main() {
 			Host: "0.0.0.0",
 		},
 		KEY_LOGGER: ConfigLogger{
-			FullTimestamp: false,
-			LogLevel:      LEVEL_DEBUG,
+			TimestampFormat: time.RFC822,
+			LogLevel:        LEVEL_DEBUG,
 		},
 	})
 
