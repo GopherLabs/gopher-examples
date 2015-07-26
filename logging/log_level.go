@@ -27,4 +27,6 @@ func main() {
 	Log.Warn("You should probably take a look at this.")
 
 	Log.Error("Something failed but I'm not quitting.")
+
+	ListenAndServe()
 }
