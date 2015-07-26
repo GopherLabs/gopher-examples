@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-	Context.Set("user", "Ricardo Rossi")
 	Route.Get("/user", func(w http.ResponseWriter, r *http.Request) {
-		Render.Text(w, "Hello, "+Context.Get("user").(string))
+		Context.Set(r, "name", "Ricardo Rossi")
+		Render.Text(w, "Hello, "+Context.Get(r, "name").(string))
 	})
 	ListenAndServe()
 }
